@@ -1,3 +1,4 @@
 include README*
 include LICENSE*
+include _source_build.py
 exclude src/pyrtlsdrlib/lib/librtlsdr*

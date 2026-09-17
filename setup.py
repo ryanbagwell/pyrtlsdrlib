@@ -2,7 +2,12 @@ import os
 import sys
 import platform
 import distutils.util
+from pathlib import Path
 from setuptools import setup, find_namespace_packages
+from setuptools.command.build_py import build_py as _build_py
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from _source_build import maybe_build_librtlsdr_from_source
 
 MACOSX_VERSIONS = {
     None:'macosx',
@@ -86,6 +91,18 @@ else:
             return 'py3', 'none', oses
 
     cmdclass = {'bdist_wheel': bdist_wheel_half_pure}
+
+
+class build_py(_build_py):
+    """Build librtlsdr from source first, if this is a wheel build that
+    doesn't already have a bundled library (see _source_build.py)."""
+
+    def run(self):
+        maybe_build_librtlsdr_from_source()
+        super().run()
+
+
+cmdclass['build_py'] = build_py
 
 setup(
     cmdclass=cmdclass,

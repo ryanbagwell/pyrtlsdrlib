@@ -1,6 +1,7 @@
 from __future__ import annotations
 import typing as tp
 import os
+import platform
 import shutil
 import tempfile
 from pathlib import Path
@@ -87,7 +88,15 @@ class Builder:
             # used by convenience.c. It's a glibc/BSD-only obsolete synonym
             # for mktime() (identical signature and behavior), so redirect
             # the one call via the preprocessor instead of patching the source.
-            cmake_args = f'{cmake_args} -DCMAKE_C_FLAGS="-Dtimelocal=mktime"'
+            c_flags = ['-Dtimelocal=mktime']
+            if platform.libc_ver()[0] == '':
+                # musl doesn't implement glibc's fortify-source "_chk"
+                # functions (e.g. __printf_chk). Some toolchains enable
+                # _FORTIFY_SOURCE by default regardless of target libc, so
+                # strip it here: otherwise the resulting undefined symbol
+                # only fails at dlopen time under musl, not at compile time.
+                c_flags.append('-U_FORTIFY_SOURCE')
+            cmake_args = f'{cmake_args} -DCMAKE_C_FLAGS="{" ".join(c_flags)}"'
         sh(f'cmake {cmake_args} -S {self.source_dir} -B {self.cmake_build_dir}')
         logger.debug(f'chdir to {self.cmake_build_dir}')
         os.chdir(self.cmake_build_dir)

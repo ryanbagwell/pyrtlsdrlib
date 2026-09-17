@@ -62,6 +62,19 @@ Or as an "extra" dependency of pyrtlsdr
     pip install pyrtlsdr[lib]
 
 
+Building from source
+---------------------
+
+If no pre-built wheel matches your platform, ``pip`` falls back to the
+source distribution. In that case, ``setup.py`` automatically downloads the
+latest `librtlsdr`_ release source from GitHub and compiles it with
+``cmake``, so the install still ends up with a working library.
+
+This requires a C compiler, ``cmake``, and libusb development headers to be
+available (e.g. ``libusb-1.0-0-dev`` on Debian/Ubuntu, ``libusb`` on
+Homebrew). To install without attempting this fallback build, set
+``PYRTLSDRLIB_SKIP_SOURCE_BUILD=1``.
+
 
 .. _librtlsdr: https://github.com/librtlsdr/librtlsdr
 .. _pyrtlsdr: https://github.com/pyrtlsdr/pyrtlsdr
