@@ -51,16 +51,18 @@ jobs:
             install-cmd: dnf install -y libusbx-devel
             arch: aarch64
             runner: blacksmith-2vcpu-ubuntu-2404-arm
+          # musllinux (Alpine/musl libc) build. aarch64 is intentionally
+          # omitted: GitHub Actions' runner refuses to execute JavaScript
+          # actions (checkout, download-artifact, upload-artifact, ...)
+          # inside an Alpine container on arm64 ("JavaScript Actions in
+          # Alpine containers are only supported on x64 Linux runners"),
+          # and that restriction applies regardless of which provider hosts
+          # the runner.
           - image-name: quay.io/pypa/musllinux_1_2_x86_64
             abi: musllinux_1_2
             install-cmd: apk add --no-cache libusb-dev
             arch: x86_64
             runner: ubuntu-24.04
-          - image-name: quay.io/pypa/musllinux_1_2_aarch64
-            abi: musllinux_1_2
-            install-cmd: apk add --no-cache libusb-dev
-            arch: aarch64
-            runner: ubuntu-24.04-arm
     runs-on:
       ${{ matrix.runner }}
     container:
@@ -336,8 +338,6 @@ jobs:
         include:
           - image-name: quay.io/pypa/musllinux_1_2_x86_64
             runner: ubuntu-latest
-          - image-name: quay.io/pypa/musllinux_1_2_aarch64
-            runner: ubuntu-24.04-arm
     runs-on:
       ${{ matrix.runner }}
     container:
