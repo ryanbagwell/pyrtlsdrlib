@@ -55,12 +55,12 @@ jobs:
             abi: musllinux_1_2
             install-cmd: apk add --no-cache libusb-dev
             arch: x86_64
-            runner: blacksmith-2vcpu-ubuntu-2404
+            runner: ubuntu-24.04
           - image-name: quay.io/pypa/musllinux_1_2_aarch64
             abi: musllinux_1_2
             install-cmd: apk add --no-cache libusb-dev
             arch: aarch64
-            runner: blacksmith-2vcpu-ubuntu-2404-arm
+            runner: ubuntu-24.04-arm
     runs-on:
       ${{ matrix.runner }}
     container:
@@ -335,9 +335,9 @@ jobs:
       matrix:
         include:
           - image-name: quay.io/pypa/musllinux_1_2_x86_64
-            runner: blacksmith-2vcpu-ubuntu-2404
+            runner: ubuntu-latest
           - image-name: quay.io/pypa/musllinux_1_2_aarch64
-            runner: blacksmith-2vcpu-ubuntu-2404-arm
+            runner: ubuntu-24.04-arm
     runs-on:
       ${{ matrix.runner }}
     container:
