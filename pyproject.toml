@@ -3,9 +3,9 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "pyrtlsdrlib"
-version = "0.0.5"
-description = "librtlsdr installer for use with pyrtlsdr"
+name = "pyrtlsdrlib-alpine"
+version = "0.0.6"
+description = "librtlsdr installer for use with pyrtlsdr with apline support"
 readme = "README.rst"
 license = "MIT"
 requires-python = ">=3.10"
@@ -33,7 +33,7 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/pyrtlsdr/pyrtlsdrlib"
+Homepage = "https://github.com/ryanbagwell/pyrtlsdrlib"
 
 [tool.setuptools.packages.find]
 where = ["src"]

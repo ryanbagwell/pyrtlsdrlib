@@ -553,7 +553,7 @@ wheels = [
 ]
 
 [[package]]
-name = "pyrtlsdrlib"
+name = "pyrtlsdrlib-alpine"
 version = "0.0.5"
 source = { editable = "." }
 
